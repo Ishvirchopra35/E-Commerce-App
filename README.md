@@ -1,40 +1,331 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/pages/api-reference/create-next-app).
+# E-Commerce Store
+
+A full-stack e-commerce web application built with Next.js, featuring real-time shopping cart, product browsing, and checkout functionality with MongoDB integration.
+
+## Project Overview
+
+This is a modern e-commerce platform that allows users to browse products by category, add items to their shopping cart, and complete purchases through an integrated checkout system. The application features a responsive design, persistent cart state, and server-side rendering for optimal performance.
+
+## Screenshots
+
+<div align="center">
+
+### Home Page - Product Catalog
+![Home Page](screenshots/home_page.png)
+*Browse products organized by categories with search functionality*
+
+### Shopping Cart
+![Shopping Cart](screenshots/shopping_cart.png)
+*View cart items with quantity controls and price breakdown*
+
+### Checkout Page
+![Checkout](screenshots/checkout_page.png)
+*Complete order with shipping details and payment*
+
+### Product Categories
+![Categories](screenshots/categories.png)
+*Products organized by category with horizontal scrolling*
+
+### Order Success
+![Order Success](screenshots/order_success.png)
+*Confirmation message after successful order placement*
+
+</div>
+
+---
+
+## Features
+
+- **Product Catalog**: Browse products organized by categories
+- **Search Functionality**: Real-time product search across all items
+- **Shopping Cart**: 
+  - Add/remove products with quantity controls
+  - Persistent cart using local storage
+  - Real-time price calculations
+  - Cart item counter in navigation
+- **Checkout System**:
+  - Customer information form
+  - Shipping cost calculation
+  - Subtotal and total price display
+  - Order submission to database
+- **Responsive Design**: Mobile-first design with Tailwind CSS
+- **Server-Side Rendering**: Fast page loads with Next.js SSR
+- **Database Integration**: MongoDB for product and order storage
+
+## Tech Stack
+
+### Frontend
+- **Next.js**: React framework with SSR and routing
+- **React**: Component-based UI library
+- **Tailwind CSS**: Utility-first CSS framework
+- **Context API**: Global state management for shopping cart
+
+### Backend
+- **Next.js API Routes**: Serverless API endpoints
+- **MongoDB**: NoSQL database for data persistence
+- **Mongoose**: MongoDB object modeling
+
+### Libraries
+- **use-local-storage-state**: Persistent cart state across sessions
+- **Heroicons**: SVG icon library
+
+
+## Database Schema
+
+### Product Model
+```
+{
+  name: String,           // Product name
+  description: String,    // Product description
+  price: Number,          // Price in dollars
+  category: String,       // Product category
+  picture: String         // Image URL
+}
+```
+
+### Order Model
+```
+{
+  products: Object,       // Ordered products with quantities
+  name: String,           // Customer name
+  address: String,        // Shipping address
+  city: String,           // City and postal code
+  email: String,          // Customer email
+  paid: Number,           // Payment status (default: 0)
+  timestamps: true        // createdAt, updatedAt
+}
+```
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+```
+node --version  # Node.js 14 or higher
+npm --version   # npm 6 or higher
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Installation
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+1. **Clone the repository**
+```
+git clone https://github.com/yourusername/ecommerce-store.git
+cd ecommerce-store
+```
 
-[API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+2. **Install dependencies**
+```
+npm install
+```
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) instead of React pages.
+3. **Set up environment variables**
 
-This project uses [`next/font`](https://nextjs.org/docs/pages/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Create a `.env` file in the root directory:
+```
+MONGODB_URI=your_mongodb_connection_string
+```
 
-## Learn More
+4. **Run the development server**
+```
+npm run dev
+```
 
-To learn more about Next.js, take a look at the following resources:
+5. **Open in browser**
+```
+http://localhost:3000
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn-pages-router) - an interactive Next.js tutorial.
+## Configuration
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### MongoDB Setup
 
-## Deploy on Vercel
+1. Create a MongoDB Atlas account or use local MongoDB
+2. Create a new database
+3. Add your connection string to `.env.local`
+4. The app will automatically connect on startup
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Adding Products
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/pages/building-your-application/deploying) for more details.
+Products can be added directly to MongoDB or through an admin interface (to be implemented). Example product:
+
+```
+{
+  "name": "Wireless Headphones",
+  "description": "High-quality Bluetooth headphones with noise cancellation",
+  "price": 79.99,
+  "category": "Electronics",
+  "picture": "https://example.com/image.jpg"
+}
+```
+
+## Key Features Explained
+
+### Shopping Cart Management
+
+The cart uses React Context API for global state and local storage for persistence:
+
+```
+// Add product to cart
+setSelectedProducts(prev => [...prev, productId]);
+
+// Remove product from cart
+setSelectedProducts(prev => prev.filter((value, index) => index !== pos));
+```
+
+### Real-Time Price Calculation
+
+```
+let subtotal = 0;
+for (let id of selectedProducts) {
+  const price = productsInfos.find(p => p._id === id)?.price || 0;
+  subtotal += price;
+}
+const total = subtotal + shippingPrice;
+```
+
+### Category-Based Product Display
+
+Products are automatically grouped by category and displayed with horizontal scrolling:
+
+```
+const categoryNames = [...new Set(products.map(p => p.category))];
+```
+
+### Search Functionality
+
+Real-time product filtering based on search input:
+
+```
+products = products.filter(p => 
+  p.name.toLowerCase().includes(phrase.toLowerCase())
+);
+```
+
+## Responsive Design
+
+- **Mobile-First**: Optimized for mobile devices
+- **Horizontal Scrolling**: Category sections scroll horizontally on small screens
+- **Sticky Footer**: Navigation always accessible
+- **Adaptive Layout**: Components adjust to screen size
+
+## UI/UX Features
+
+- **Emerald Color Scheme**: Modern green accent color
+- **Smooth Scrolling**: Snap-to-grid product browsing
+- **Visual Feedback**: Active states for navigation and buttons
+- **Loading States**: Handles empty cart and loading states
+- **Success Messages**: Order confirmation feedback
+
+## Future Enhancements
+
+- [ ] User authentication and accounts
+- [ ] Order history tracking
+- [ ] Product reviews and ratings
+- [ ] Payment gateway integration (Stripe/PayPal)
+- [ ] Admin dashboard for product management
+- [ ] Wishlist functionality
+- [ ] Product image gallery
+- [ ] Advanced filtering (price range, ratings)
+- [ ] Email notifications for orders
+- [ ] Inventory management
+- [ ] Discount codes and promotions
+- [ ] Multi-currency support
+
+## Troubleshooting
+
+**Cart not persisting**:
+- Check browser local storage settings
+- Ensure cookies are enabled
+
+**Products not loading**:
+- Verify MongoDB connection string
+- Check network tab for API errors
+- Ensure products exist in database
+
+**Checkout not working**:
+- Check all required fields are filled
+- Verify API routes are accessible
+- Check MongoDB write permissions
+
+## API Endpoints
+
+### GET /api/products
+Fetch products by IDs or all products
+```
+// Get specific products
+GET /api/products?ids=id1,id2,id3
+
+// Response
+[
+  {
+    _id: "...",
+    name: "Product Name",
+    price: 29.99,
+    ...
+  }
+]
+```
+
+### POST /api/checkout
+Submit order with customer details
+```
+POST /api/checkout
+Body: {
+  name: "Customer Name",
+  email: "email@example.com",
+  address: "123 Street",
+  city: "City, 12345",
+  products: "id1,id2,id3"
+}
+```
+
+## Learning Outcomes
+
+This project demonstrates:
+- Full-stack development with Next.js
+- Context API for state management
+- MongoDB integration with Mongoose
+- Server-side rendering (SSR)
+- RESTful API design
+- Responsive web design with Tailwind CSS
+- Form handling and validation
+- Local storage for persistence
+- Component-based architecture
+
+## License
+
+This project is open source and available for educational purposes.
+
+## Acknowledgments
+
+- Next.js team for the excellent framework
+- Tailwind CSS for the utility-first approach
+- MongoDB for flexible data storage
+- Heroicons for beautiful SVG icons
+
+---
+
+**Author**: Ishvir Chopra 
+**Date**: November 2025 
+**Contact**: ishvir.chopra@gmail.om
+**Live Demo**: Video coming soon!
+
+---
+
+## Quick Start Commands
+
+```
+# Install dependencies
+npm install
+
+# Run development server
+npm run dev
+
+# Build for production
+npm run build
+
+# Start production server
+npm start
+```
+
+Made with 💚 by [Your Name]
