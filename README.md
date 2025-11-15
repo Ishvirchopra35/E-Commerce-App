@@ -11,23 +11,33 @@ This is a modern e-commerce platform that allows users to browse products by cat
 <div align="center">
 
 ### Home Page - Product Catalog
-![Home Page](screenshots/home_page.png)
+
+<img width="1919" height="986" alt="image" src="https://github.com/user-attachments/assets/53e38ced-26fa-4803-b083-4a10b8e3e968" />
+
 *Browse products organized by categories with search functionality*
 
 ### Shopping Cart
-![Shopping Cart](screenshots/shopping_cart.png)
+
+<img width="1919" height="989" alt="image" src="https://github.com/user-attachments/assets/43be84d2-0e2d-46d3-963f-6e0e0a040d7d" />
+
 *View cart items with quantity controls and price breakdown*
 
 ### Checkout Page
-![Checkout](screenshots/checkout_page.png)
+
+<img width="1919" height="986" alt="image" src="https://github.com/user-attachments/assets/3b255148-a242-4782-b45f-6ec0c52215c8" />
+
 *Complete order with shipping details and payment*
 
-### Product Categories
-![Categories](screenshots/categories.png)
-*Products organized by category with horizontal scrolling*
+### Search Functionality
+
+<img width="1917" height="994" alt="image" src="https://github.com/user-attachments/assets/1d484e3c-0245-462a-8ff9-7d0a8a6d38bf" />
+
+*Ability to search products by name*
 
 ### Order Success
-![Order Success](screenshots/order_success.png)
+
+<img width="1919" height="991" alt="image" src="https://github.com/user-attachments/assets/e4cc35a4-d9ad-4a34-8b52-8c811d0bca46" />
+
 *Confirmation message after successful order placement*
 
 </div>
