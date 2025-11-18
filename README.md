@@ -338,4 +338,4 @@ npm run build
 npm start
 ```
 
-Made with 💚 by [Your Name]
+Made with 💚 by Ishvir
