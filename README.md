@@ -315,10 +315,10 @@ This project is open source and available for educational purposes.
 
 ---
 
-**Author**: Ishvir Chopra 
-**Date**: November 2025 
-**Contact**: ishvir.chopra@gmail.om
-**Live Demo**: Video coming soon!
+**Author**: Ishvir Chopra  
+**Date**: November 2025  
+**Contact**: ishvir.chopra@gmail.com  
+**Live Demo**: Video coming soon!  
 
 ---
 
